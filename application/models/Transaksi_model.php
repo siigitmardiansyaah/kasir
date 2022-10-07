@@ -55,23 +55,20 @@ class Transaksi_model extends CI_Model {
 	}
 
 
-	public function penjualanBulan($date)
+	public function penjualanBulan($first,$last)
 	{
-		$qty = $this->db->query("SELECT qty FROM transaksi WHERE DATE_FORMAT(tanggal, '%d %m %Y') = '$date'")->result();
-		$d = [];
-		$data = [];
-		foreach ($qty as $key) {
-			$d[] = explode(',', $key->qty);
-		}
-		foreach ($d as $key) {
-			$data[] = array_sum($key);
-		}
-		return $data;
+		$qty = $this->db->query("SELECT DATE_FORMAT(tanggal,'%d') as hari,count(id) as qty FROM transaksi WHERE DATE_FORMAT(tanggal, '%Y-%m-%d') BETWEEN DATE_FORMAT('$first', '%Y-%m-%d') AND DATE_FORMAT('$last', '%Y-%m-%d') GROUP BY DATE_FORMAT(tanggal,'%d')")->result();
+		return $qty;
 	}
 
 	function transaksiHari($hari)
 	{
 		return $this->db->query("SELECT * FROM transaksi WHERE DATE(tanggal) = '$hari'")->num_rows();
+	}
+
+	function transaksi($hari)
+	{
+		return $this->db->query("SELECT SUM(total_bayar) as total FROM transaksi WHERE DATE(tanggal) = '$hari'")->row();
 	}
 
 	public function transaksiTerakhir($hari)

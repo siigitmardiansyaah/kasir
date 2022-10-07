@@ -15,6 +15,7 @@ class Dashboard extends CI_Controller {
 		if ($this->session->userdata('status') == 'login' ) {
 			$tgl = date('Y-m-d');
 			$data['transaksi_hari'] = $this->transaksi_model->transaksiHari($tgl);
+			$data['transaksi'] = $this->transaksi_model->transaksi($tgl);
 			$data['stok'] = $this->produk_model->StokNow($tgl);
 			$data['stok1'] = $this->produk_model->StokNow1($tgl);
 			$this->load->view('dashboard',$data);

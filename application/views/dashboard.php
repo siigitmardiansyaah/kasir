@@ -31,7 +31,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-4 col-sm-6">
+          <div class="col-lg-3 col-sm-6">
             <div class="small-box bg-primary">
               <div class="inner">
                 <h3><?php echo $transaksi_hari ?></h3>
@@ -45,25 +45,39 @@
               </a>
             </div>
           </div>
-          <div class="col-lg-4 col-sm-6">
+          <div class="col-lg-3 col-sm-6">
             <div class="small-box bg-info">
               <div class="inner">
                 <h3><?php echo $stok ?></h3>
                 <p>Produk Masuk Hari Ini</p>
               </div>
               <div class="icon">
-                <i class="fas fa-money-bill"></i>
+                <i class="fas fa-truck"></i>
               </div>
               <a href="<?php echo site_url('stok_masuk') ?>" class="small-box-footer">
                 More Info <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
           </div>
-          <div class="col-lg-4 col-sm-6">
+          <div class="col-lg-3 col-sm-6">
+            <div class="small-box bg-secondary">
+              <div class="inner">
+                <h3><?php echo rupiah($transaksi->total) ?></h3>
+                <p>Total Pendapatan Hari Ini</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-money-bill"></i>
+              </div>
+              <a href="#" class="small-box-footer">
+                More Info <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
             <div class="small-box bg-warning">
               <div class="inner">
                 <h3><?php echo $stok1 ?></h3>
-                <p>Produk Masuk Hari Ini</p>
+                <p>Produk Keluar Hari Ini</p>
               </div>
               <div class="icon">
                 <i class="fas fa-archive"></i>

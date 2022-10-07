@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+date_default_timezone_set('Asia/Jakarta');
 
 class Transaksi extends CI_Controller {
 
@@ -20,10 +21,10 @@ class Transaksi extends CI_Controller {
 
 	public function read()
 	{
-		// header('Content-type: application/json');
+		header('Content-type: application/json');
 		if ($this->transaksi_model->read()->num_rows() > 0) {
 			foreach ($this->transaksi_model->read()->result() as $transaksi) {
-				// $barcode = explode(',', $transaksi->barcode);
+				$barcode = explode(',', $transaksi->barcode);
 				// $tanggal = new DateTime($transaksi->tanggal);
 				$data[] = array(
 					'tanggal' => date('d-m-Y H:i:s'),
@@ -50,7 +51,7 @@ class Transaksi extends CI_Controller {
 		$tanggal = new DateTime($this->input->post('tanggal'));
 		$barcode = array();
 		$detail = array();
-		foreach ($produk as $produk) {
+		foreach ((array)$produk as $produk) {
 			$this->transaksi_model->removeStok($produk->id, $produk->stok);
 			$this->transaksi_model->addTerjual($produk->id, $produk->terjual);
 			array_push($barcode, $produk->id);
@@ -64,7 +65,6 @@ class Transaksi extends CI_Controller {
 			array_push($detail,$data1);
 		}
 		
-
 		// HEADER TRANSAKSI
 		$data = array(
 			'tanggal' => date('Y-m-d H:i:s'),
@@ -77,13 +77,13 @@ class Transaksi extends CI_Controller {
 			'total_item' => count($barcode)
 		);
 		$header = $this->transaksi_model->create($data);
+		$id_header = $this->db->insert_id();
 		// HEADER_TRANSAKSI
 
 		if ($header) {
-
 			foreach ($detail as $da) {
 				$data2 = array(
-							'id_transaksi' => $this->db->insert_id(),
+							'id_transaksi' =>  $id_header,
 							'id_barang' => $da['id_barang'],
 							'qty' => $da['qty'],
 							'harga' => $da['harga'],
@@ -91,6 +91,8 @@ class Transaksi extends CI_Controller {
 			);
 			$header_detail = $this->transaksi_model->create1($data2);
 			}
+			
+
 		}
 		$data = $this->input->post('form');
 	}
@@ -113,15 +115,10 @@ class Transaksi extends CI_Controller {
 	public function penjualan_bulan()
 	{
 		header('Content-type: application/json');
-		$day = $this->input->post('day');
-		foreach ($day as $key => $value) {
-			$now = date($day[$value].' m Y');
-			if ($qty = $this->transaksi_model->penjualanBulan($now) !== []) {
-				$data[] = array_sum($this->transaksi_model->penjualanBulan($now));
-			} else {
-				$data[] = 0;
-			}
-		}
+		$day = date('Y-m-d h:i:s');
+		$first = date('Y-m-d', strtotime('first day of this month', strtotime($day)));
+		$last = date('Y-m-d', strtotime('last day of this month', strtotime($day)));
+		$data = $this->transaksi_model->penjualanBulan($first,$last);
 		echo json_encode($data);
 	}
 

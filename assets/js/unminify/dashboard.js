@@ -48,17 +48,21 @@ $.ajax( {
 });
 $.ajax( {
     url:penjualan_bulanUrl,
-    type:"post",
-    data: {
-        day: getDays()
-    },
+    type:"GET",
     dataType:"json",
     success:res=> {
+        console.log(res);
+        var label = [];
+        var value = [];
+        for (var i in res) {
+            label.push(res[i].hari);
+            value.push(res[i].qty);
+        }
         var el=$("#bulanIni").get(0).getContext("2d");
         new Chart(el, {
             type:"bar",
             data: {
-                labels:getDays(),
+                labels:label,
                 datasets:[ {
                     label: "Total",
                     backgroundColor: "rgba(60,141,188,0.9)",
@@ -68,7 +72,7 @@ $.ajax( {
                     pointStrokeColor: "rgba(60,141,188,1)",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(60,141,188,1)",
-                    data: res
+                    data: value
                 }],
                 options: {
                     maintainAspectRatio:false, responsive:true, legend: {
