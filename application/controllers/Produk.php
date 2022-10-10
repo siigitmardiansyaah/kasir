@@ -1,9 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+date_default_timezone_set('Asia/Jakarta');
 
 class Produk extends CI_Controller {
 
-	public function __construct()
+	function __construct()
 	{
 		parent::__construct();
 		if ($this->session->userdata('status') !== 'login' ) {
@@ -13,12 +14,12 @@ class Produk extends CI_Controller {
 		$this->load->library('Zend');
 	}
 
-	public function index()
+	function index()
 	{
 		$this->load->view('produk');
 	}
 
-	public function read()
+	function read()
 	{
 		header('Content-type: application/json');
 		if ($this->produk_model->read()->num_rows() > 0) {
@@ -42,7 +43,7 @@ class Produk extends CI_Controller {
 		echo json_encode($produk);
 	}
 
-	public function add()
+	function add()
 	{
 		$this->zend->load('Zend/Barcode');
 		$imageResource = Zend_Barcode::factory('code128', 'image', array('text'=>$this->input->post('barcode')), array())->draw();
@@ -63,7 +64,7 @@ class Produk extends CI_Controller {
 		}
 	}
 
-	public function delete()
+	function delete()
 	{
 		$id = $this->input->post('id');
 		$cekItem = $this->produk_model->getItem($id);
@@ -73,7 +74,7 @@ class Produk extends CI_Controller {
 		}
 	}
 
-	public function edit()
+	function edit()
 	{
 		$id = $this->input->post('id');
 		$cekItem = $this->produk_model->getItem($id);
@@ -112,7 +113,7 @@ class Produk extends CI_Controller {
 		}
 	}
 
-	public function get_produk()
+	function get_produk()
 	{
 		header('Content-type: application/json');
 		$id = $this->input->post('id');
@@ -122,7 +123,7 @@ class Produk extends CI_Controller {
 		}
 	}
 
-	public function get_barcode()
+	function get_barcode()
 	{
 		header('Content-type: application/json');
 		$barcode = $this->input->post('barcode');
@@ -136,21 +137,36 @@ class Produk extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function get_nama()
+	function get_barcode1()
+	{
+		header('Content-type: application/json');
+		$barcode = $this->input->post('barcode');
+		$search = $this->produk_model->getBarcode1($barcode);
+		foreach ($search as $barcode) {
+			$data[] = array(
+				'id' => $barcode->id,
+				'text' => $barcode->kode_produk
+			);
+		}
+		echo json_encode($data);
+	}
+
+	function get_nama()
 	{
 		header('Content-type: application/json');
 		$id = $this->input->post('id');
 		echo json_encode($this->produk_model->getNama($id));
 	}
+	
 
-	public function get_stok()
+	function get_stok()
 	{
 		header('Content-type: application/json');
 		$id = $this->input->post('id');
 		echo json_encode($this->produk_model->getStok($id));
 	}
 
-	public function produk_terlaris()
+	function produk_terlaris()
 	{
 		header('Content-type: application/json');
 		$produk = $this->produk_model->produkTerlaris();
@@ -165,7 +181,7 @@ class Produk extends CI_Controller {
 		echo json_encode($result);
 	}
 
-	public function data_stok()
+	function data_stok()
 	{
 		header('Content-type: application/json');
 		$produk = $this->produk_model->dataStok();

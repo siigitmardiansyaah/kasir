@@ -37,20 +37,25 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <table class="table w-100 table-bordered table-hover" id="laporan_penjualan">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Tanggal</th>
-                  <th>Nama Produk</th> 
-                  <th>Total Bayar</th> 
-                  <th>Jumlah Uang</th> 
-                  <th>Diskon</th> 
-                  <th>Pelanggan</th> 
-                  <th>Action</th> 
-                </tr>
-              </thead>
-            </table>
+           <form action="<?php echo base_url()?>laporan/cetak" method="POST">
+           <div class="form-group">
+            <label for="exampleInputEmail1">Tanggal Dari</label>
+            <input type="date" name="dtfrom" class="form-control" id="dtfrom" aria-describedby="emailHelp" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Tanggal Sampai</label>
+            <input type="date" name="dtthru" class="form-control" id="exampleInputPassword1" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Jenis Laporan</label>
+            <select name="jenis" id="jenis" class="form-control" required>
+              <option value="">Pilih Laporan</option>
+              <option value="penjualan">Laporan Penjualan</option>
+              <option value="stok">Laporan Stok Masuk</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Print</button>
+           </form>
           </div>
         </div>
       </div><!-- /.container-fluid -->

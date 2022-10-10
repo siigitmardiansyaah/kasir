@@ -154,7 +154,7 @@
   var produkGetNamaUrl = '<?php echo site_url('produk/get_nama') ?>';
   var produkGetStokUrl = '<?php echo site_url('produk/get_stok') ?>';
   var addUrl = '<?php echo site_url('transaksi/add') ?>';
-  var getBarcodeUrl = '<?php echo site_url('produk/get_barcode') ?>';
+  var getBarcodeUrl = '<?php echo site_url('produk/get_barcode1') ?>';
   var pelangganSearchUrl = '<?php echo site_url('pelanggan/search') ?>';
   var cetakUrl = '<?php echo site_url('transaksi/cetak/') ?>';
 </script>

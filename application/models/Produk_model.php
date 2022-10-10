@@ -5,12 +5,12 @@ class Produk_model extends CI_Model {
 
 	private $table = 'produk';
 
-	public function create($data)
+	function create($data)
 	{
 		return $this->db->insert($this->table, $data);
 	}
 
-	public function read()
+	function read()
 	{
 		$this->db->select('produk.id, produk.kode_produk, produk.nama_produk, produk.harga, produk.stok, satuan_produk.satuan,produk.qr_code');
 		$this->db->from($this->table);
@@ -18,19 +18,19 @@ class Produk_model extends CI_Model {
 		return $this->db->get();
 	}
 
-	public function update($id, $data)
+	function update($id, $data)
 	{
 		$this->db->where('id', $id);
 		return $this->db->update($this->table, $data);
 	}
 
-	public function delete($id)
+	function delete($id)
 	{
 		$this->db->where('id', $id);
 		return $this->db->delete($this->table);
 	}
 
-	public function getProduk($id)
+	function getProduk($id)
 	{
 		$this->db->select('produk.id, produk.kode_produk, produk.nama_produk, produk.harga, produk.stok, satuan_produk.id as satuan_id, satuan_produk.satuan');
 		$this->db->from($this->table);
@@ -39,34 +39,41 @@ class Produk_model extends CI_Model {
 		return $this->db->get();
 	}
 
-	public function getBarcode($search='')
+	function getBarcode($search='')
 	{
 		$this->db->select('produk.id, produk.kode_produk');
 		$this->db->where('produk.stok > 0');
 		return $this->db->get($this->table)->result();
 	}
 
-	public function getNama($id)
+	function getBarcode1($search='')
+	{
+		$this->db->select('produk.id, produk.kode_produk');
+		$this->db->where('produk.stok > 0');
+		return $this->db->get($this->table)->result();
+	}
+
+	function getNama($id)
 	{
 		$this->db->select('nama_produk, stok');
 		$this->db->where('id', $id);
 		return $this->db->get($this->table)->row();
 	}
 
-	public function getStok($id)
+	function getStok($id)
 	{
 		$this->db->select('stok, nama_produk, harga, kode_produk');
 		$this->db->where('id', $id);
 		return $this->db->get($this->table)->row();
 	}
 
-	public function produkTerlaris()
+	function produkTerlaris()
 	{
 		return $this->db->query('SELECT produk.nama_produk, produk.terjual FROM `produk` 
 		ORDER BY CONVERT(terjual,decimal)  DESC LIMIT 5')->result();
 	}
 
-	public function dataStok()
+	function dataStok()
 	{
 		return $this->db->query('SELECT produk.nama_produk, produk.stok FROM `produk` ORDER BY CONVERT(stok, decimal) DESC LIMIT 50')->result();
 	}

@@ -67,13 +67,18 @@ function checkStok() {
                         row.data(data).draw();
                         indexProduk = produk.findIndex(a => a.id == barcode);
                         produk[indexProduk].stok = stok - data[3];
+                        produk[indexProduk].terjual = data[3];
                         $("#total").html(total + harga * jumlah)
+                        $("#jumlah").val("");
+                        $('#barcode').val(null).trigger('change')
+                        $("#nama_produk").text("");
+                        $("#sisa").text("");
                     }
                 } else {
                     produk.push({
                         id: barcode,
                         stok: stok - jumlah,
-                        terjual: jumlah
+                        terjual : jumlah
                     });
                     transaksi.row.add([
                         dataBarcode,
@@ -83,8 +88,11 @@ function checkStok() {
                         `<button name="${barcode}" class="btn btn-sm btn-danger" onclick="remove('${barcode}')">Hapus</btn>`]).draw();
                     $("#total").html(total + harga * jumlah);
                     $("#jumlah").val("");
-                    $("#tambah").attr("disabled", "disabled");
-                    $("#bayar").removeAttr("disabled")
+                    $("#tambah").attr("disabled", "disabled"),
+                    $("#bayar").removeAttr("disabled"),
+                    $('#barcode').val(null).trigger('change'),
+                    $("#nama_produk").text("");
+                    $("#sisa").text("");
                 } 
             }
         }
@@ -129,7 +137,7 @@ function remove(nama) {
         akhir = total - stok * harga
     $("#total").html(akhir);
     transaksi.row($("[name=" + nama + "]").closest("tr")).remove().draw();
-    $("#tambah").attr("disabled", "disabled");
+    // $("#tambah").attr("disabled", "disabled");
     if (akhir < 1) {
         $("#bayar").attr("disabled", "disabled")
     }

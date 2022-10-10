@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2022 at 11:02 AM
+-- Generation Time: Oct 10, 2022 at 11:19 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -41,7 +41,7 @@ CREATE TABLE `detail_transaksi` (
 --
 
 INSERT INTO `detail_transaksi` (`id_detail`, `id_transaksi`, `id_barang`, `qty`, `harga`, `total_harga`) VALUES
-(3, 20, 5, 12, 20000, 240000);
+(79, 104, 5, 4, 20000, 80000);
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,8 @@ CREATE TABLE `pengguna` (
 
 INSERT INTO `pengguna` (`id`, `username`, `password`, `nama`, `role`) VALUES
 (1, 'admin', '$2y$10$/I7laWi1mlNFxYSv54EUPOH8MuZhmRWxhE.LaddTK9TSmVe.IHP2C', 'Admin', '1'),
-(2, 'ibrahimalanshor', '$2y$10$5thNuizSyAdrGXC9A/WYd.StNiSRUy0eBZJ401hGBfUpwGINu9kyG', 'Ibrahim Al Anshor', '2');
+(2, 'ibrahimalanshor', '$2y$10$5thNuizSyAdrGXC9A/WYd.StNiSRUy0eBZJ401hGBfUpwGINu9kyG', 'Ibrahim Al Anshor', '2'),
+(3, 'sgm', '$2y$10$i0gUxn1XEAqeHotZJtJPJOL/bEPFsT3Wzz9tVDUZFZQFhAr8GDgjO', 'Sigit Mardiansyah', '2');
 
 -- --------------------------------------------------------
 
@@ -129,8 +130,8 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id`, `kode_produk`, `nama_produk`, `kategori`, `satuan`, `harga`, `stok`, `terjual`, `qr_code`) VALUES
-(5, 'K001', 'Susu', 0, 1, '20000', 372, '12', 'K001.jpg'),
-(6, 'K002', 'GAS', 0, 2, '3000', 0, '10', 'K002.jpg');
+(5, 'K001', 'Susu', 0, 1, '20000', 50, '4', 'K001.jpg'),
+(6, 'K002', 'GAS', 0, 2, '3000', 50, '12', 'K002.jpg');
 
 -- --------------------------------------------------------
 
@@ -186,7 +187,10 @@ CREATE TABLE `stok_masuk` (
 
 INSERT INTO `stok_masuk` (`id`, `tanggal`, `id_produk`, `jumlah`, `keterangan`, `supplier`) VALUES
 (4, '2022-09-28 14:17:45', 5, '500', 'penambahan', 3),
-(5, '2022-09-28 14:18:11', 6, '30', 'penambahan', 3);
+(5, '2022-09-28 14:18:11', 6, '30', 'penambahan', 3),
+(6, '2022-09-29 08:15:06', 6, '200', 'penambahan', 3),
+(7, '2022-10-07 08:23:51', 5, '200', 'penambahan', 3),
+(8, '2022-10-07 08:24:00', 6, '200', 'penambahan', 3);
 
 -- --------------------------------------------------------
 
@@ -207,7 +211,7 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`id`, `nama`, `alamat`, `telepon`, `keterangan`) VALUES
-(3, 'PT SUJAJA', 'GASSSS', '12313213131', 'Aktif');
+(4, 'PT SUKA SUKA', 'Bekasi', '12212121', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -226,7 +230,7 @@ CREATE TABLE `toko` (
 --
 
 INSERT INTO `toko` (`id`, `nama`, `alamat`) VALUES
-(1, 'Toko Tum', 'Jln Raya Klesem Selatan No 1E Wanadadi, Banjarnegara, Indonesia');
+(1, 'Toko SGM', 'Cibitung');
 
 -- --------------------------------------------------------
 
@@ -251,7 +255,7 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id`, `tanggal`, `total_bayar`, `jumlah_uang`, `diskon`, `total_item`, `pelanggan`, `nota`, `kasir`) VALUES
-(20, '2022-09-28 10:50:39', '240000', '250000', '', 1, NULL, '2UUN6QJ5VYYLERB', 1);
+(104, '2022-10-10 20:47:24', '80000', '100000', '', 1, NULL, 'BSHI76F8RX00MS4', 1);
 
 --
 -- Indexes for dumped tables
@@ -336,7 +340,7 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `kategori_produk`
@@ -354,7 +358,7 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -378,13 +382,13 @@ ALTER TABLE `stok_keluar`
 -- AUTO_INCREMENT for table `stok_masuk`
 --
 ALTER TABLE `stok_masuk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `toko`
@@ -396,7 +400,7 @@ ALTER TABLE `toko`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- Constraints for dumped tables

@@ -5,31 +5,31 @@ class Transaksi_model extends CI_Model {
 
 	private $table = 'transaksi';
 
-	public function removeStok($id, $stok)
+	function removeStok($id, $stok)
 	{
 		$this->db->where('id', $id);
 		$this->db->set('stok', $stok);
 		return $this->db->update('produk');
 	}
 
-	public function addTerjual($id, $jumlah)
+	function addTerjual($id, $jumlah)
 	{
 		$this->db->where('id', $id);
 		$this->db->set('terjual', $jumlah);
 		return $this->db->update('produk');;
 	}
 
-	public function create($data)
+	function create($data)
 	{
 		return $this->db->insert($this->table, $data);
 	}
 
-	public function create1($data)
+	function create1($data)
 	{
 		return $this->db->insert("detail_transaksi", $data);
 	}
 
-	public function read()
+	function read()
 	{
 		$this->db->select('transaksi.id, transaksi.tanggal, transaksi.barcode, transaksi.qty, transaksi.total_bayar, transaksi.jumlah_uang, transaksi.diskon, pelanggan.nama as pelanggan');
 		$this->db->from($this->table);
@@ -37,13 +37,13 @@ class Transaksi_model extends CI_Model {
 		return $this->db->get();
 	}
 
-	public function delete($id)
+	function delete($id)
 	{
 		$this->db->where('id', $id);
 		return $this->db->delete($this->table);
 	}
 
-	public function getProduk($barcode, $qty)
+	function getProduk($barcode, $qty)
 	{
 		$total = explode(',', $qty);
 		foreach ($barcode as $key => $value) {
@@ -55,7 +55,7 @@ class Transaksi_model extends CI_Model {
 	}
 
 
-	public function penjualanBulan($first,$last)
+	function penjualanBulan($first,$last)
 	{
 		$qty = $this->db->query("SELECT DATE_FORMAT(tanggal,'%d') as hari,count(id) as qty FROM transaksi WHERE DATE_FORMAT(tanggal, '%Y-%m-%d') BETWEEN DATE_FORMAT('$first', '%Y-%m-%d') AND DATE_FORMAT('$last', '%Y-%m-%d') GROUP BY DATE_FORMAT(tanggal,'%d')")->result();
 		return $qty;
@@ -71,12 +71,12 @@ class Transaksi_model extends CI_Model {
 		return $this->db->query("SELECT SUM(total_bayar) as total FROM transaksi WHERE DATE(tanggal) = '$hari'")->row();
 	}
 
-	public function transaksiTerakhir($hari)
+	function transaksiTerakhir($hari)
 	{
 		return $this->db->query("SELECT transaksi.qty FROM transaksi WHERE DATE_FORMAT(tanggal, '%d %m %Y') = '$hari' LIMIT 1")->row();
 	}
 
-	public function getAll($id)
+	function getAll($id)
 	{
 		$this->db->select('transaksi.nota, transaksi.tanggal, produk.nama_produk, detail_transaksi.qty, transaksi.total_bayar, transaksi.jumlah_uang, pengguna.nama as kasir');
 		$this->db->from('transaksi');
@@ -87,7 +87,7 @@ class Transaksi_model extends CI_Model {
 		return $this->db->get()->result();
 	}
 
-	public function getName($barcode)
+	function getName($barcode)
 	{
 		foreach ($barcode as $b) {
 			$this->db->select('nama_produk, harga');
@@ -95,6 +95,20 @@ class Transaksi_model extends CI_Model {
 			$data[] = $this->db->get('produk')->row();
 		}
 		return $data;
+	}
+
+	function getHeader($id) {
+		$this->db->join('pengguna b','a.kasir = b.id');
+		$this->db->where('a.id',$id);
+		$query = $this->db->get('transaksi a')->row();
+		return $query;
+	}
+
+	function getDetail($id) {
+		$this->db->join('produk b','a.id_barang = b.id');
+		$this->db->where('a.id_transaksi',$id);
+		$query = $this->db->get('detail_transaksi a')->result();
+		return $query;
 	}
 
 }
