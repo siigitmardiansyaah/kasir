@@ -63,12 +63,12 @@ class Transaksi_model extends CI_Model {
 
 	function transaksiHari($hari)
 	{
-		return $this->db->query("SELECT * FROM transaksi WHERE DATE(tanggal) = '$hari'")->num_rows();
+		return $this->db->query("SELECT * FROM transaksi WHERE DATE_FORMAT(tanggal,'%Y-%m-%d') = '$hari'")->num_rows();
 	}
 
 	function transaksi($hari)
 	{
-		return $this->db->query("SELECT SUM(total_bayar) as total FROM transaksi WHERE DATE(tanggal) = '$hari'")->row();
+		return $this->db->query("SELECT SUM(jumlah_uang) as total FROM transaksi WHERE DATE_FORMAT(tanggal,'%Y-%m-%d') = '$hari'")->row();
 	}
 
 	function transaksiTerakhir($hari)
@@ -109,6 +109,11 @@ class Transaksi_model extends CI_Model {
 		$this->db->where('a.id_transaksi',$id);
 		$query = $this->db->get('detail_transaksi a')->result();
 		return $query;
+	}
+
+	function getTerjual($id) {
+		$this->db->where('id',$id);
+		return $this->db->get('produk')->row();
 	}
 
 }

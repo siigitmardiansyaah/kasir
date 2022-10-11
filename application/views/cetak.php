@@ -37,7 +37,14 @@
 						Harga Jual
 					</td>
 					<td width="23%" align="right">
-						<?php echo rupiah($header->total_bayar) ?>
+						<?php 
+						
+						if($header->diskon != 0) {
+							echo rupiah($header->total_bayar + $header->diskon);
+						}else{
+							echo rupiah($header->total_bayar);
+						}
+						?>
 					</td>
 				</tr>
 			</table>
@@ -48,7 +55,13 @@
 						Total
 					</td>
 					<td width="23%" align="right">
-						<?php echo rupiah($header->total_bayar) ?>
+						<?php
+						if($header->diskon != 0) {
+							echo rupiah($header->total_bayar + $header->diskon);
+						}else{
+							echo rupiah($header->total_bayar);
+						}
+						?>
 					</td>
 				</tr>
 				<?php if ($header->diskon != null):?>
@@ -69,25 +82,16 @@
 						<?php echo rupiah($header->jumlah_uang) ?>
 					</td>
 				</tr>
-				<?php if($header->diskon != null):?>
 				<tr>
 					<td width="76%" align="right">
 						Kembalian
 					</td>
 					<td width="23%" align="right">
-						<?php echo rupiah($header->jumlah_uang - ($header->total_bayar - $header->diskon)) ?>
+						<?php
+							echo rupiah($header->jumlah_uang - $header->total_bayar); 
+						?>
 					</td>
 				</tr>
-				<?php else: ?>
-					<tr>
-					<td width="76%" align="right">
-						Kembalian
-					</td>
-					<td width="23%" align="right">
-						<?php echo rupiah($header->jumlah_uang - $header->total_bayar) ?>
-					</td>
-				</tr>
-				<?php endif;?>
 			</table>
 			<br>
 			Terima Kasih <br>
@@ -95,7 +99,8 @@
 		</center>
 	</div>
 	<script>
-		window.print()
+		window.print();
+		window.close();
 	</script>
 </body>
 </html>

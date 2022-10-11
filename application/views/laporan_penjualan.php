@@ -51,7 +51,7 @@
             <select name="jenis" id="jenis" class="form-control" required>
               <option value="">Pilih Laporan</option>
               <option value="penjualan">Laporan Penjualan</option>
-              <option value="stok">Laporan Stok Masuk</option>
+              <option value="stok">Laporan Stok</option>
             </select>
           </div>
           <button type="submit" class="btn btn-primary">Print</button>
@@ -71,10 +71,5 @@
 <script src="<?php echo base_url('assets/vendor/adminlte/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/vendor/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/vendor/adminlte/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
-<script>
-  var readUrl = '<?php echo site_url('transaksi/read') ?>';
-  var deleteUrl = '<?php echo site_url('transaksi/delete') ?>';
-</script>
-<script src="<?php echo base_url('assets/js/laporan_penjualan.min.js') ?>"></script>
 </body>
 </html>

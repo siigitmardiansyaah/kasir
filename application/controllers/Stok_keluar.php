@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+date_default_timezone_set('Asia/Jakarta');
 
 class Stok_keluar extends CI_Controller {
 
@@ -25,7 +26,7 @@ class Stok_keluar extends CI_Controller {
 				$tanggal = new DateTime($stok_keluar->tanggal);
 				$data[] = array(
 					'tanggal' => $tanggal->format('d-m-Y'),
-					'barcode' => $stok_keluar->kode_produk,
+					'kode_produk' => $stok_keluar->kode_produk,
 					'nama_produk' => $stok_keluar->nama_produk,
 					'jumlah' => $stok_keluar->jumlah,
 					'keterangan' => $stok_keluar->keterangan,
@@ -44,13 +45,14 @@ class Stok_keluar extends CI_Controller {
 	{
 		$id = $this->input->post('barcode');
 		$jumlah = $this->input->post('jumlah');
-		$stok = $this->stok_keluar_model->getStok($id)->stok;
+		$getStok = $this->stok_keluar_model->getStok($id);
+		$stok = $getStok->stok;
 		$rumus = max($stok - $jumlah,0);
 		$addStok = $this->stok_keluar_model->addStok($id, $rumus);
 		if ($addStok) {
 			// $tanggal = new DateTime($this->input->post('tanggal'));
 			$data = array(
-				'tanggal' => $date('Y-m-d H:i:s'),
+				'tanggal' => date('Y-m-d H:i:s'),
 				'id_produk' => $id,
 				'jumlah' => $jumlah,
 				'keterangan' => $this->input->post('keterangan')

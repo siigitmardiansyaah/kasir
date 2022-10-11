@@ -49,7 +49,6 @@ class Produk_model extends CI_Model {
 	function getBarcode1($search='')
 	{
 		$this->db->select('produk.id, produk.kode_produk');
-		$this->db->where('produk.stok > 0');
 		return $this->db->get($this->table)->result();
 	}
 

@@ -76,15 +76,15 @@
       <input type="hidden" name="id">
       <div class="form-group">
         <label>Nama</label>
-        <input type="text" class="form-control" placeholder="Nama" name="nama" required>
+        <input type="text" class="form-control" placeholder="Nama" name="nama" id="nama" required>
       </div>
       <div class="form-group">
         <label>Alamat</label>
-        <textarea class="form-control" placeholder="Alamat" name="alamat" rows="4" required></textarea>
+        <textarea class="form-control" placeholder="Alamat" name="alamat" rows="4" id="alamat" required></textarea>
       </div>
       <div class="form-group">
         <label>Telepon</label>
-        <input type="number" class="form-control" placeholder="Telepon" name="telepon" required>
+        <input type="number" class="form-control" placeholder="Telepon" name="telepon" id="telepon" required>
       </div>
       <div class="form-group">
         <label>Keterangan</label>

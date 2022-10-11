@@ -164,13 +164,11 @@ function add() {
             nota: $("#nota").html()
         },
         success: res => {
-            if (isCetak) {
-                Swal.fire("Sukses", "Sukses Membayar", "success").
-                    then(() => window.location.href = `${cetakUrl}${res}`)
-            } else {
-                Swal.fire("Sukses", "Sukses Membayar", "success").
-                    then(() => window.location.reload())
-            }
+            window.open(`transaksi/cetak/${res}`,'_blank')
+				Swal.fire("Sukses", "Sukses Membayar", "success").then(
+					() =>
+					window.location.reload()
+					);			       
         },
         error: err => {
             console.log(err)

@@ -39,6 +39,9 @@ function addData() {
             $(".modal").modal("hide");
             Swal.fire("Sukses", "Sukses Menambahkan Data", "success");
             reloadTable();
+            $("#nama").text("");
+            $("#alamat").text("");
+            $("#jumlah").text("");
         },
         error: err => {
             console.log(err);

@@ -15,7 +15,6 @@ class History_m extends CI_Model {
 		return $result;
     }
 
-
 }
 
 /* End of file Transaksi_model.php */

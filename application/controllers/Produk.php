@@ -28,10 +28,10 @@ class Produk extends CI_Controller {
 					'kode_produk' => $produk->kode_produk,
 					'nama' => $produk->nama_produk,
 					'satuan' => $produk->satuan,
-					'harga' => $produk->harga,
+					'harga' => rupiah($produk->harga),
 					'stok' => $produk->stok,
 					'qr_code' => '<img src="'.base_url().'assets/barcode/'.$produk->qr_code.'" alt="">',
-					'action' => '<button class="btn btn-sm btn-success" onclick="edit('.$produk->id.')">Edit</button> <button class="btn btn-sm btn-danger" onclick="remove('.$produk->id.')">Delete</button> <a href="'.base_url().'assets//'.$produk->qr_code.'" class="btn btn-sm btn-info">Print</a>'
+					'action' => '<button class="btn btn-sm btn-success" onclick="edit('.$produk->id.')">Edit</button> <button class="btn btn-sm btn-danger" onclick="remove('.$produk->id.')">Delete</button> <a href="'.base_url().'produk/cetak_barcode/'.$produk->qr_code.'" class="btn btn-sm btn-info" target="_blank">Print</a>'
 				);
 			}
 		} else {
@@ -46,7 +46,7 @@ class Produk extends CI_Controller {
 	function add()
 	{
 		$this->zend->load('Zend/Barcode');
-		$imageResource = Zend_Barcode::factory('code128', 'image', array('text'=>$this->input->post('barcode')), array())->draw();
+		$imageResource = Zend_Barcode::factory('code128', 'image', array('text'=>$this->input->post('barcode'),'barHeight'=> 35), array())->draw();
 		$imageName = $this->input->post('barcode').'.jpg';
 		$imagePath = './assets/barcode/'; // penyimpanan file barcode
 		imagejpeg($imageResource, $imagePath.$imageName); 
@@ -81,7 +81,8 @@ class Produk extends CI_Controller {
 		$kd_produk = $this->input->post('barcode');
 		if($cekItem->kode_produk !== $kd_produk ) {
 			$this->zend->load('Zend/Barcode');
-			$imageResource = Zend_Barcode::factory('code128', 'image', array('text'=>$kd_produk), array())->draw();
+			$imageResource = Zend_Barcode::factory('code128', 'image', array('text'=>$this->input->post('barcode'), 
+			'barHeight'=> 35), array())->draw();
 			$imageName = $kd_produk.'.jpg';
 			$imagePath = './assets/barcode/'; // penyimpanan file barcode
 			imagejpeg($imageResource, $imagePath.$imageName); 
@@ -188,9 +189,9 @@ class Produk extends CI_Controller {
 		echo json_encode($produk);
 	}
 
-	function print() {
-		header('Content-type: image/jpg');
-				$nama = $this->uri->segment(3);
+	function cetak_barcode() {
+		// header('Content-type: image/jpg');
+		$nama = $this->uri->segment(3);
 		$data['nama'] = $nama;
 		$this->load->view('cetak_barcode',$data);
 	}

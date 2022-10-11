@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+date_default_timezone_set('Asia/Jakarta');
 
-class Laporan_penjualan extends CI_Controller {
+class Laporan extends CI_Controller {
 
     function __construct()
 	{
@@ -22,10 +23,14 @@ class Laporan_penjualan extends CI_Controller {
         $dtthru = $this->input->post('dtthru');
         $jenis  = $this->input->post('jenis');
         if($jenis == 'penjualan' ) {
+            $data['dtfrom'] = $dtfrom;
+            $data['dtthru'] = $dtthru;
             $data['data'] = $this->laporan_m->getData($dtfrom,$dtthru);
             $this->load->view('cetak_laporan_penjualan',$data);
         }else{
-            $data['data'] = $this->laporan_m->getDataStok($dtfrom,$dtthru);
+            $data['dtfrom'] = $dtfrom;
+            $data['dtthru'] = $dtthru;
+            $data['data'] = $this->laporan_m->getDataStock($dtfrom,$dtthru);
             $this->load->view('cetak_laporan_stok',$data);
         }
     }

@@ -92,7 +92,7 @@
       </div>
       <div class="form-group">
         <label>Harga</label>
-        <input type="text" class="form-control" placeholder="Harga" name="harga" required>
+        <input type="number" class="form-control" placeholder="Harga" name="harga" required>
       </div>
       <div class="form-group">
         <label>Stok</label>

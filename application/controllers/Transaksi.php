@@ -53,9 +53,9 @@ class Transaksi extends CI_Controller {
 		$detail = array();
 
 			foreach($produk as $produk) {
-				
+				$terjual = $this->transaksi_model->getTerjual($produk->id);
 				$this->transaksi_model->removeStok($produk->id, $produk->stok);
-				$this->transaksi_model->addTerjual($produk->id, $produk->terjual);
+				$this->transaksi_model->addTerjual($produk->id, $produk->terjual + $terjual->terjual);
 				array_push($barcode, $produk->id);
 					$item = $this->produk_model->getProduk($produk->id)->row();
 					$data1 = array(
@@ -94,6 +94,7 @@ class Transaksi extends CI_Controller {
 					$header_detail = $this->transaksi_model->create1($data2);
 					}
 				}
+				echo json_encode($id_header);
 				$data = $this->input->post('form');
 	}
 
