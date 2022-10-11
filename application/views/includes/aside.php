@@ -115,6 +115,12 @@
             <p>Laporan</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?php echo site_url('backup') ?>" class="nav-link <?php echo $uri == 'laporan' ? 'active' : 'no' ?>" target="_blank">
+            <i class="fas fa-database nav-ico"></i>
+            <p>Backup Database</p>
+          </a>
+        </li>
           <li class="nav-item">
             <a href="<?php echo site_url('pengaturan') ?>" class="nav-link <?php echo $uri == 'pengaturan' ? 'active' : 'no' ?>">
               <i class="fas fa-cog nav-icon"></i>
