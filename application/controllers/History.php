@@ -23,7 +23,7 @@ class History extends CI_Controller {
         if($role == 'admin') {
             $data['transaksi'] = $this->history_m->getTransaksiAdmin($tgl) ;
         }else{
-            // $data['transaksi'] = $this->history_m->getTransaksiKasir($tgl,$id) ;
+            $data['transaksi'] = $this->history_m->getTransaksiKasir($tgl,$id) ;
         }
         $this->load->view('history',$data);   
 	}

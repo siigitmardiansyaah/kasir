@@ -25,22 +25,25 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?php echo site_url('supplier') ?>" class="nav-link <?php echo $uri == 'supplier' ? 'active' : 'no' ?>">
-            <i class="nav-icon fas fa-truck"></i>
-            <p>
-              Supplier
-            </p>
+          <a href="<?php echo site_url('transaksi') ?>" class="nav-link <?php echo $uri == 'transaksi' ? 'active' : 'no' ?>">
+            <i class="fas fa-money-bill nav-icon"></i>
+            <p>Transaksi</p>
           </a>
         </li>
-        <!-- <li class="nav-item">
-          <a href="<?php echo site_url('pelanggan') ?>" class="nav-link <?php echo $uri == 'pelanggan' ? 'active' : 'no' ?>">
-            <i class="nav-icon fas fa-address-book"></i>
-            <p>
-              Pelanggan
-            </p>
+        <li class="nav-item">
+          <a href="<?php echo site_url('history') ?>" class="nav-link <?php echo $uri == 'history' ? 'active' : 'no' ?>">
+            <i class="fas fa-file nav-icon"></i>
+            <p>History Transaksi</p>
           </a>
-        </li> -->
-        <li class="nav-item has-treeview <?php echo $uri == 'produk' || $uri == 'kategori_produk' || $uri == 'satuan_produk' ? 'menu-open' : 'no' ?>">
+        </li>
+        <li class="nav-item">
+          <a href="<?php echo site_url('laporan') ?>" class="nav-link <?php echo $uri == 'laporan' ? 'active' : 'no' ?>">
+            <i class="fas fa-book nav-ico"></i>
+            <p>Laporan</p>
+          </a>
+        </li>
+        <?php if ($role === 'admin'): ?>
+          <li class="nav-item has-treeview <?php echo $uri == 'produk' || $uri == 'kategori_produk' || $uri == 'satuan_produk' ? 'menu-open' : 'no' ?>">
           <a href="#" class="nav-link <?php echo $uri == 'produk' || $uri == 'kategori_produk' || $uri == 'satuan_produk' ? 'active' : 'no' ?>">
             <i class="nav-icon fas fa-box"></i>
             <p>
@@ -75,7 +78,15 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item has-treeview <?php echo $uri == 'stok_masuk' || $uri == 'stok_keluar' ? 'menu-open' : 'no' ?>">
+          <li class="nav-item">
+          <a href="<?php echo site_url('supplier') ?>" class="nav-link <?php echo $uri == 'supplier' ? 'active' : 'no' ?>">
+            <i class="nav-icon fas fa-truck"></i>
+            <p>
+              Supplier
+            </p>
+          </a>
+        </li>
+          <li class="nav-item has-treeview <?php echo $uri == 'stok_masuk' || $uri == 'stok_keluar' ? 'menu-open' : 'no' ?>">
           <a href="#" class="nav-link <?php echo $uri == 'stok_masuk' || $uri == 'stok_keluar' ? 'active' : 'no' ?>">
             <i class="fas fa-archive nav-icon"></i>
             <p>Stok</p>
@@ -95,25 +106,6 @@
               </a>
             </li>
           </ul>
-        </li>
-        <li class="nav-item">
-          <a href="<?php echo site_url('transaksi') ?>" class="nav-link <?php echo $uri == 'transaksi' ? 'active' : 'no' ?>">
-            <i class="fas fa-money-bill nav-icon"></i>
-            <p>Transaksi</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="<?php echo site_url('history') ?>" class="nav-link <?php echo $uri == 'history' ? 'active' : 'no' ?>">
-            <i class="fas fa-file nav-icon"></i>
-            <p>History Transaksi</p>
-          </a>
-        </li>
-        <?php if ($role === 'admin'): ?>
-          <li class="nav-item">
-          <a href="<?php echo site_url('laporan') ?>" class="nav-link <?php echo $uri == 'laporan' ? 'active' : 'no' ?>">
-            <i class="fas fa-book nav-ico"></i>
-            <p>Laporan</p>
-          </a>
         </li>
         <li class="nav-item">
           <a href="<?php echo site_url('backup') ?>" class="nav-link <?php echo $uri == 'laporan' ? 'active' : 'no' ?>" target="_blank">
