@@ -9,8 +9,6 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/vendor/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/vendor/adminlte/plugins/sweetalert2/sweetalert2.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/vendor/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/vendor/adminlte/plugins/select2/css/select2.min.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('assets/vendor/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') ?>">
   <?php $this->load->view('partials/head'); ?>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -27,7 +25,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col">
-            <h1 class="m-0 text-dark">Produk</h1>
+            <h1 class="m-0 text-dark">History Transaksi Hari Ini</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -38,19 +36,18 @@
     <section class="content">
       <div class="container-fluid">
         <div class="card">
-          <div class="card-header">
-            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#modal" onclick="add()">Add</button> -->
-          </div>
+          <!--  -->
           <div class="card-body">
             <table class="table w-100 table-bordered table-hover" id="history">
               <thead>
                 <tr class="text-center">
-                  <th>No</th>
+                <th>No</th>
                   <th>Nota</th>
                   <th>Tanggal</th>
                   <th>Total Belanja</th>
                   <th>Jumlah Pembayaran</th>
                   <th>Jumlah Produk</th>
+                  <th>Kasir</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -62,15 +59,15 @@
                 <td><?php echo $no++ ?></td>
                 <td><?php echo $tra->nota ?></td>
                 <td><?php echo date('d-m-Y h:i:s',strtotime($tra->tanggal)) ?></td>
-                <td><?php echo rupiah($tra->total_bayar) ?></td>
+                <td><?php echo rupiah($tra->total_bayar_jual) ?></td>
                 <td><?php echo rupiah($tra->jumlah_uang) ?></td>
                 <td><?php echo $tra->total_item ?></td>
+                <td><?php echo $tra->nama ?></td>
                 <td>
                 <button class="btn btn-sm btn-success btn-sm col-xs-2" onclick="print(<?php echo $tra->id ?>)">Print Struk</button>
-                <button class="btn btn-sm btn-primary col-xs-2" data-toggle="modal" data-target="#myModal<?php echo $tra->id ?>">Lihat Detail</button>
+                <button class="btn btn-sm btn-primary col-xs-2" data-toggle="modal" data-target="#myModal<?php echo $tra->id?>" data-id="<?php echo $tra->id?>">Lihat Detail</button>
                 </td>
                 </tr>
-                 
                 <?php endforeach; ?>
               </tbody>
             </table>
@@ -81,51 +78,50 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
 </div>
-<div class="modal fade" id="myModal<?php echo $tra->id; ?>" role="dialog">
-    <div class="modal-dialog modal-lg">  
-         <div class="modal-content">  
-              <div class="modal-header">  
-                   <h4 class="modal-title">Detail Transaksi</h4>  
-              </div>  
-              <div class="modal-body">
-              <table class="table w-100 table-bordered table-hover" id="detail_transaksi">
-              <thead>
-                <tr class="text-center">
-                  <th>No</th>
-                  <th>Kode Produk</th>
-                  <th>Nama Produk</th>
-                  <th>Jumlah</th>
-                  <th>Harga Satuan</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                <?php
-                $id = $tra->id;
-                $query = $this->db->query("SELECT b.kode_produk, b.nama_produk, a.qty, b.harga, a.qty * b.harga as total_harga from detail_transaksi a join
-                produk b on a.id_barang = b.id where a.id_transaksi = '$id'")->result();
-                $no = 1;
-                foreach ($query as $q) : ?>
-                <tr class="text-center">
-                <td><?php echo $no++ ?></td>
-                <td><?php echo $q->kode_produk ?></td>
-                <td><?php echo $q->nama_produk ?></td>
-                <td><?php echo $q->qty ?></td>
-                <td><?php echo rupiah($q->harga) ?></td>
-                <td><?php echo rupiah($q->total_harga) ?></td>
-                </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-              </div>  
-              <div class="modal-footer">  
-                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
-              </div>  
-         </div>  
-    </div>  
-</div>
+              <?php
+              foreach ($transaksi as $d) :?>
+                <div class="modal fade" id="myModal<?php echo $d->id?>" role="dialog">
+                  <div class="modal-dialog modal-lg"> 
+                    <div class="modal-content">  
+                      <div class="modal-header">  
+                          <h4 class="modal-title">Detail Transaksi</h4>  
+                      </div>
+                      <div class="modal-body">
+                        <table class="table w-100 table-bordered table-hover" id="detail_transaksi">
+                        <thead>
+                          <tr class="text-center">
+                            <th>No</th>
+                            <th>Kode Produk</th>
+                            <th>Nama Produk</th>
+                            <th>Jumlah</th>
+                            <th>Harga Satuan</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <?php
+                            $id = $d->id;
+                            $query = $this->db->query("SELECT b.kode_produk, b.nama_produk, a.qty, b.harga_jual, a.qty * b.harga_jual as total_harga from detail_transaksi a join
+                            produk b on a.id_barang = b.id where a.id_transaksi = '$id'")->result();
+                            $no = 1;
+                            foreach ($query as $q) : ?>
+                            <tr class="text-center">
+                            <td><?php echo $no++ ?></td>
+                            <td><?php echo $q->kode_produk ?></td>
+                            <td><?php echo $q->nama_produk ?></td>
+                            <td><?php echo $q->qty ?></td>
+                            <td><?php echo rupiah($q->harga_jual) ?></td>
+                            <td><?php echo rupiah($q->total_harga) ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                          </tbody>
+                      </table>
+                      </div>  
+                    </div> 
+                  </div>
+                </div>
+                <?php endforeach;?>
 
 
 <!-- ./wrapper -->
@@ -134,6 +130,7 @@
 <script src="<?php echo base_url('assets/vendor/adminlte/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/vendor/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/vendor/adminlte/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/vendor/adminlte/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 <script>
   var readUrl = '<?php echo site_url('history/read') ?>';
 </script>

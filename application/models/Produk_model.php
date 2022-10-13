@@ -12,7 +12,7 @@ class Produk_model extends CI_Model {
 
 	function read()
 	{
-		$this->db->select('produk.id, produk.kode_produk, produk.nama_produk, produk.harga, produk.stok, satuan_produk.satuan,produk.qr_code');
+		$this->db->select('produk.id, produk.kode_produk, produk.nama_produk, produk.harga_jual,produk.harga_beli, produk.stok, satuan_produk.satuan,produk.qr_code');
 		$this->db->from($this->table);
 		$this->db->join('satuan_produk', 'produk.satuan = satuan_produk.id');
 		return $this->db->get();
@@ -32,7 +32,7 @@ class Produk_model extends CI_Model {
 
 	function getProduk($id)
 	{
-		$this->db->select('produk.id, produk.kode_produk, produk.nama_produk, produk.harga, produk.stok, satuan_produk.id as satuan_id, satuan_produk.satuan');
+		$this->db->select('produk.id, produk.kode_produk, produk.nama_produk, produk.harga_jual,harga_beli, produk.stok, satuan_produk.id as satuan_id, satuan_produk.satuan');
 		$this->db->from($this->table);
 		$this->db->join('satuan_produk', 'produk.satuan = satuan_produk.id');
 		$this->db->where('produk.id', $id);
@@ -61,7 +61,7 @@ class Produk_model extends CI_Model {
 
 	function getStok($id)
 	{
-		$this->db->select('stok, nama_produk, harga, kode_produk');
+		$this->db->select('stok, nama_produk, harga_jual, kode_produk');
 		$this->db->where('id', $id);
 		return $this->db->get($this->table)->row();
 	}

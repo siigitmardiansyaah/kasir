@@ -24,8 +24,9 @@
 						<td><?php echo $key->kode_produk ?></td>
 						<td></td>
 						<td align="right"><?php echo $key->nama_produk ?></td>
-						<td align="right"><?php echo rupiah($key->harga) ?></td>
-						<td align="right"><?php echo rupiah($key->total_harga) ?></td>
+						<td align="right"><?php echo $key->qty ?></td>
+						<td align="right"><?php echo rupiah($key->harga_jual) ?></td>
+						<td align="right"><?php echo rupiah($key->total_harga_jual) ?></td>
 
 					</tr>
 				<?php endforeach ?>
@@ -40,9 +41,9 @@
 						<?php 
 						
 						if($header->diskon != 0) {
-							echo rupiah($header->total_bayar + $header->diskon);
+							echo rupiah($header->total_bayar_jual + $header->diskon);
 						}else{
-							echo rupiah($header->total_bayar);
+							echo rupiah($header->total_bayar_jual);
 						}
 						?>
 					</td>
@@ -57,23 +58,13 @@
 					<td width="23%" align="right">
 						<?php
 						if($header->diskon != 0) {
-							echo rupiah($header->total_bayar + $header->diskon);
+							echo rupiah($header->total_bayar_jual + $header->diskon);
 						}else{
-							echo rupiah($header->total_bayar);
+							echo rupiah($header->total_bayar_jual);
 						}
 						?>
 					</td>
 				</tr>
-				<?php if ($header->diskon != null):?>
-					<tr>
-					<td width="76%" align="right">
-						Diskon
-					</td>
-					<td width="23%" align="right">
-						<?php echo rupiah($header->diskon) ?>
-					</td>
-				</tr>
-				<?php endif;?>
 				<tr>
 					<td width="76%" align="right">
 						Bayar
@@ -88,7 +79,7 @@
 					</td>
 					<td width="23%" align="right">
 						<?php
-							echo rupiah($header->jumlah_uang - $header->total_bayar); 
+							echo rupiah($header->jumlah_uang - $header->total_bayar_jual); 
 						?>
 					</td>
 				</tr>

@@ -21,9 +21,11 @@
                 <th>No</th>
                 <th>Tanggal</th>
                 <th>Nota</th>
-                <th>Sub Total</th>
+                <th>Sub Total Penjualan</th>
+                <th>Sub Total Pembelian</th>
                 <th>Diskon</th>
-                <th>Total Penjualan</th>
+                <th>Total Biaya Penjualan</th>
+                <th>Total Biaya Pembelian</th>
                 <th>Pembayaran</th>
             </tr>
         </thead>
@@ -31,28 +33,38 @@
             <?php
             $no = 1;
             $gas = array();
+            $gas1 = array();
             foreach($data as $da) :
-            array_push($gas,$da->pembayaran);
+            array_push($gas,$da->sub_total_jual);
+            array_push($gas1,$da->sub_total_beli);
             ?>
             <tr class="text-center">
                 <td><?php echo $no++ ?></td>
                 <td><?php echo $da->tanggal ?></td>
                 <td><?php echo $da->nota ?></td>
                <?php if($da->diskon == 0) : ?>
-                <td><?php echo rupiah($da->sub_total) ?></td>
+                <td><?php echo rupiah($da->sub_total_jual) ?></td>
                 <?php else: ?>
                 <td><?php 
-                    $diskon = $da->sub_total + $da->diskon;
+                    $diskon = $da->sub_total_jual + $da->diskon;
+                    echo rupiah($diskon)  ?></td>
+                <?php endif; ?>
+                <?php if($da->diskon == 0) : ?>
+                <td><?php echo rupiah($da->sub_total_beli) ?></td>
+                <?php else: ?>
+                <td><?php 
+                    $diskon = $da->sub_total_beli + $da->diskon;
                     echo rupiah($diskon)  ?></td>
                 <?php endif; ?>
                 <td><?php echo rupiah($da->diskon) ?></td>
-                <td><?php echo rupiah($da->sub_total) ?></td>
+                <td><?php echo rupiah($da->sub_total_jual) ?></td>
+                <td><?php echo rupiah($da->sub_total_beli) ?></td>
                 <td><?php echo rupiah($da->pembayaran) ?></td>
             </tr>
             <?php endforeach; ?>
             <tr class="text-center">
-            <td colspan = "6" style="font-weight: bold;"> Total </td>
-            <td colspan = "4" style="font-weight: bold;">Rp. <?php echo rupiah(array_sum($gas)) ?></td>
+            <td colspan = "8" style="font-weight: bold;"> Total Keuntungan </td>
+            <td colspan = "6" style="font-weight: bold;">Rp. <?php echo rupiah(array_sum($gas) - array_sum($gas1)) ?></td>
             </tr>
         </tbody>
 

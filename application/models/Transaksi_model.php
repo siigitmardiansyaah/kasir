@@ -68,7 +68,7 @@ class Transaksi_model extends CI_Model {
 
 	function transaksi($hari)
 	{
-		return $this->db->query("SELECT SUM(jumlah_uang) as total FROM transaksi WHERE DATE_FORMAT(tanggal,'%Y-%m-%d') = '$hari'")->row();
+		return $this->db->query("SELECT (SUM(total_bayar_jual) - SUM(total_bayar_beli)) as total FROM transaksi WHERE DATE_FORMAT(tanggal,'%Y-%m-%d') = '$hari'")->row();
 	}
 
 	function transaksiTerakhir($hari)

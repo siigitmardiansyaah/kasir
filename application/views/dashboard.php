@@ -63,7 +63,7 @@
             <div class="small-box bg-secondary">
               <div class="inner">
                 <h3><?php echo rupiah($transaksi->total) ?></h3>
-                <p>Total Pendapatan Hari Ini</p>
+                <p>Total Keuntungan Hari Ini</p>
               </div>
               <div class="icon">
                 <i class="fas fa-money-bill"></i>

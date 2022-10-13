@@ -49,7 +49,8 @@
                   <th>Kode Barang</th>
                   <th>Nama</th>
                   <th>Satuan</th>
-                  <th>Harga</th>
+                  <th>Harga Jual</th>
+                  <th>Harga Beli</th>
                   <th>Stok</th>
                   <th>Barcode</th>
                   <th>Actions</th>
@@ -91,8 +92,12 @@
         <select name="satuan" id="satuan" class="form-control select2" required></select>
       </div>
       <div class="form-group">
-        <label>Harga</label>
-        <input type="number" class="form-control" placeholder="Harga" name="harga" required>
+        <label>Harga Jual</label>
+        <input type="number" class="form-control" placeholder="Harga Jual" name="harga_jual" required>
+      </div>
+      <div class="form-group">
+        <label>Harga Beli</label>
+        <input type="number" class="form-control" placeholder="Harga Beli" name="harga_beli" required>
       </div>
       <div class="form-group">
         <label>Stok</label>

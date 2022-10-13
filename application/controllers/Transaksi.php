@@ -29,7 +29,7 @@ class Transaksi extends CI_Controller {
 				$data[] = array(
 					'tanggal' => date('d-m-Y H:i:s'),
 					'nama_produk' => '<table>'.$this->transaksi_model->getProduk($barcode, $transaksi->qty).'</table>',
-					'total_bayar' => $transaksi->total_bayar,
+					'total_bayar_jual' => $transaksi->total_bayar_jual,
 					'jumlah_uang' => $transaksi->jumlah_uang,
 					'diskon' => $transaksi->diskon,
 					'pelanggan' => $transaksi->pelanggan,
@@ -51,7 +51,7 @@ class Transaksi extends CI_Controller {
 		$tanggal = new DateTime($this->input->post('tanggal'));
 		$barcode = array();
 		$detail = array();
-
+		$harga_beli = array();
 			foreach($produk as $produk) {
 				$terjual = $this->transaksi_model->getTerjual($produk->id);
 				$this->transaksi_model->removeStok($produk->id, $produk->stok);
@@ -61,16 +61,20 @@ class Transaksi extends CI_Controller {
 					$data1 = array(
 							'id_barang' => $produk->id,
 							'qty' => $produk->terjual,
-							'harga' => $item->harga,
-							'total_harga' => $item->harga * $produk->terjual
+							'harga_jual' => $item->harga_jual,
+							'harga_beli' => $item->harga_beli,
+							'total_harga_jual' => $item->harga_jual * $produk->terjual,
+							'total_harga_beli' => $item->harga_beli * $produk->terjual
 					);
 					array_push($detail,$data1);
+					array_push($harga_beli, $item->harga_beli * $produk->terjual);
 			}
 		
 				// HEADER TRANSAKSI
 				$data = array(
 					'tanggal' => date('Y-m-d H:i:s'),
-					'total_bayar' => $this->input->post('total_bayar'),
+					'total_bayar_jual' => $this->input->post('total_bayar'),
+					'total_bayar_beli' => array_sum($harga_beli),
 					'jumlah_uang' => $this->input->post('jumlah_uang'),
 					'diskon' => $this->input->post('diskon'),
 					'pelanggan' => $this->input->post('pelanggan'),
@@ -88,8 +92,10 @@ class Transaksi extends CI_Controller {
 									'id_transaksi' =>  $id_header,
 									'id_barang' => $da['id_barang'],
 									'qty' => $da['qty'],
-									'harga' => $da['harga'],
-									'total_harga' => $da['total_harga']
+									'harga_jual' => $da['harga_jual'],
+									'total_harga_jual' => $da['total_harga_jual'],
+									'harga_beli' => $da['harga_beli'],
+									'total_harga_beli' => $da['total_harga_beli']
 					);
 					$header_detail = $this->transaksi_model->create1($data2);
 					}

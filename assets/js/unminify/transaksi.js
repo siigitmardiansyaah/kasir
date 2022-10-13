@@ -51,7 +51,7 @@ function checkStok() {
                 nama_produk = res.nama_produk,
                 jumlah = parseInt($("#jumlah").val()),
                 stok = parseInt(res.stok),
-                harga = parseInt(res.harga),
+                harga = parseInt(res.harga_jual),
                 dataBarcode = res.kode_produk,
                 total = parseInt($("#total").html());
             if (stok < jumlah) Swal.fire("Gagal", "Stok Tidak Cukup", "warning");
